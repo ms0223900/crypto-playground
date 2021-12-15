@@ -1,7 +1,8 @@
+import NFTCardItem from 'components/NFTCardItem'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import useLoginMoralis from '../lib/custom-hooks/useLoginMoralis'
+import useInitMoralis from '../lib/custom-hooks/useInitMoralis'
 import styles from '../styles/Home.module.css'
 
 const PageHead = () => (
@@ -15,7 +16,10 @@ const PageHead = () => (
 const Home: NextPage = () => {
   const {
     user,
-  } = useLoginMoralis()
+    nftList,
+    handleMint
+  } = useInitMoralis()
+
   return (
     <div className={styles.container}>
       <PageHead />
@@ -24,8 +28,16 @@ const Home: NextPage = () => {
           <div>{`User: ${user.getUsername()}`}</div>
         )}
       </header>
-      <div>
-        
+      <div
+        className='flex'
+      >
+          {nftList.map((n, i) => (
+            <NFTCardItem 
+              key={i}
+              metadata={n.parsedMetadata}
+              onMint={handleMint}
+            />
+          ))}
       </div>
     </div>
   )

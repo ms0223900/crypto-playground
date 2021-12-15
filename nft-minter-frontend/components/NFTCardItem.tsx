@@ -3,17 +3,22 @@ import React, { memo } from 'react'
 import { Callback } from 'types'
 
 export interface NFTCardItemProps {
-  metadata: SingleParsedMetadata
+  metadata: SingleParsedMetadata | null
   onMint: Callback
 }
 
 const NFTCardItem = ({
+  metadata,
   onMint,
 }: NFTCardItemProps) => {
+  if(!metadata) return null;
   return (
     <div>
-      <div>
-
+      <div
+      >
+        <div>
+          {metadata.name}
+        </div>
       </div>
       <div>
         <input />
