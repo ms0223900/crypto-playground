@@ -1,0 +1,1 @@
+export const DEFAULT_CHAIN = process.env.NEXT_PUBLIC_CHAIN || 'rinkeby';

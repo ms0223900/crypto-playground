@@ -1,0 +1,1 @@
+export type Callback = (...params: any) => any
