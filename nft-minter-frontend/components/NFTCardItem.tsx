@@ -23,7 +23,7 @@ const NFTCardItem = ({
       <div>
         <input />
         <input />
-        <button onClick={onMint}>
+        <button className="btn btn-primary" onClick={onMint}>
           {'Mint'}
         </button>
       </div>
