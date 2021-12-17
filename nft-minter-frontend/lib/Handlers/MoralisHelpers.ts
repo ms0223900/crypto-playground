@@ -1,3 +1,5 @@
+import { readFileSync } from "fs";
+import convertFileToBase64 from "lib/functions/convertFileToBase64";
 import Moralis from "moralis"
 
 export interface ImgMetadataParams {
@@ -36,6 +38,23 @@ const MoralisHelpers = {
     await file.save();
     const hash = (file as any).hash();
     return hash;
+  },
+
+  saveFileToMoralisIPFS: async (dataName: string, data: File) => {
+    const fileBase64 = await convertFileToBase64(data)
+    const options = {
+      abi: [
+        {
+          path: `moralis/${dataName}`,
+          content: fileBase64,
+        }
+      ]
+    }
+    console.log(options)
+    const uploadFn = Moralis.Web3API.storage.uploadFolder as any
+    const path = await uploadFn(options)
+    console.log(path);
+    return path;
   },
 
   getAddressFromUser: (user: Moralis.User<Moralis.Attributes>) => {

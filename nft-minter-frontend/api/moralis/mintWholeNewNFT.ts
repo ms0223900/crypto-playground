@@ -14,16 +14,18 @@ const mintWholeNewNFT = async ({
     nftTokenId,
 }: MintWholeNewNFTOptions) => {
     // create new nft infos
-    const fileHash = await MoralisHelpers.saveFileToMoralis(imgFile.name, imgFile);
-    console.log(fileHash);
-    const metadata = MoralisHelpers.makeImgMetaData({
-        name: 'New NFT!!' + new Date().getTime(),
-        description: 'HI!',
-        imgHash: fileHash,
-    });
-    const metaJSON = MoralisHelpers.makeImgMetaDataJSON(nftTokenId, metadata);
-    const jsonHash = await MoralisHelpers.saveFileToMoralis(metaJSON.name, metaJSON.data);
-    console.log(jsonHash)
+    // const fileHash = await MoralisHelpers.saveFileToMoralis(imgFile.name, imgFile);
+    const filePath = await MoralisHelpers.saveFileToMoralisIPFS(imgFile.name, imgFile)
+    console.log(filePath);
+    // console.log(fileHash);
+    // const metadata = MoralisHelpers.makeImgMetaData({
+    //     name: 'New NFT!!' + new Date().getTime(),
+    //     description: 'HI!',
+    //     imgHash: fileHash,
+    // });
+    // const metaJSON = MoralisHelpers.makeImgMetaDataJSON(nftTokenId, metadata);
+    // const jsonHash = await MoralisHelpers.saveFileToMoralis(metaJSON.name, metaJSON.data);
+    // console.log(jsonHash)
     // mint NFT
     // await mintNFT(address)({ nftTokenId, amount: 1, });
 }
