@@ -7,6 +7,9 @@ export interface ImgMetadataParams {
   description: string,
   imgHash: string,
 }
+export interface ImgMetadataByPathParams extends Omit<ImgMetadataParams, 'imgHash'> {
+  imgPath: string
+}
 export interface BasicMetadata {
   name: string
   description: string,
@@ -14,12 +17,24 @@ export interface BasicMetadata {
 }
 
 const MoralisHelpers = {
+  getUploadedPathFromResult: (res: any) => (
+    res[0].path
+  ),
+
   makeImgMetaData: ({
     name, description, imgHash,
   }: ImgMetadataParams) => ({
     name,
     description,
     image: `/ipfs/${imgHash}`
+  }),
+
+  makeImgMetaDataByPath: ({
+    name, description, imgPath,
+  }: ImgMetadataByPathParams) => ({
+    name,
+    description,
+    image: imgPath,
   }),
 
   makeMetadataFileNameFromTokenId: (tokenId: number) => (
@@ -40,8 +55,8 @@ const MoralisHelpers = {
     return hash;
   },
 
-  saveFileToMoralisIPFS: async (dataName: string, data: File) => {
-    const fileBase64 = await convertFileToBase64(data)
+  saveFileToMoralisIPFS: async (dataName: string, data: File, base64Data?: string) => {
+    const fileBase64 = base64Data || await convertFileToBase64(data)
     const options = {
       abi: [
         {

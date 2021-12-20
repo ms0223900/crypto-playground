@@ -1,3 +1,4 @@
+import mint721Token from "api/moralis/mint721Token";
 import mintNFT from "api/moralis/mintNFT";
 import mintWholeNewNFT from "api/moralis/mintWholeNewNFT";
 import Moralis from "moralis";
@@ -46,11 +47,15 @@ const useInitMoralis = () => {
   const handleMintNewNFT = useCallback(() => {
     (async () => {
       if(userAddressRef.current && fileRef.current) {
-        await mintWholeNewNFT({
+        mint721Token(userAddressRef.current)({
           imgFile: fileRef.current,
-          address: userAddressRef.current,
-          nftTokenId: 3,
+          nftTokenId: 1,
         })
+        // await mintWholeNewNFT({
+        //   imgFile: fileRef.current,
+        //   address: userAddressRef.current,
+        //   nftTokenId: 3,
+        // })
       }
     })()
   }, []);
