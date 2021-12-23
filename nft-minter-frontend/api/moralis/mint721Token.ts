@@ -1,16 +1,20 @@
 import { ERC_721_TEST_CONTRACT_ADDRESS } from "config";
-import MoralisHelpers from "lib/Handlers/MoralisHelpers";
+import MoralisHelpers, { BasicMetadata, ImgMetadataParams } from "lib/Handlers/MoralisHelpers";
 import Moralis from "moralis";
 import abi from '../../static/erc721_test_abi.json';
 
+export type MintERC721TokenMetadataOptions = Partial<Pick<ImgMetadataParams, 'name' | 'description'>>
+
 export interface MintERC721TokenOptions { 
     nftTokenId: number
-    imgFile: File 
+    imgFile: File
+    metadataOptions?: MintERC721TokenMetadataOptions
 }
 
 const mint721Token = (address: string) => async ({
     imgFile,
     nftTokenId,
+    metadataOptions,
   }: MintERC721TokenOptions) => {
     const web3 = await Moralis.Web3.enableWeb3();
     const contract = new web3.eth.Contract(abi as any, ERC_721_TEST_CONTRACT_ADDRESS, {
@@ -25,6 +29,7 @@ const mint721Token = (address: string) => async ({
         name: 'New NFT!!' + new Date().getTime(),
         description: 'HI!',
         imgPath,
+        ...metadataOptions,
     });
     const metaJSON = MoralisHelpers.makeImgMetaDataJSON(nftTokenId, metadata);
     const uploadedTokenRes = await MoralisHelpers.saveFileToMoralisIPFS(metaJSON.name, undefined as any, metaJSON.data.base64);

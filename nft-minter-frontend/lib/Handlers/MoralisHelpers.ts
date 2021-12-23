@@ -1,6 +1,8 @@
+import { CONTRACT_ADDRESS } from "config";
 import { readFileSync } from "fs";
 import convertFileToBase64 from "lib/functions/convertFileToBase64";
 import Moralis from "moralis"
+import abi from '../../static/abi.json';
 
 export interface ImgMetadataParams {
   name: string
@@ -76,6 +78,12 @@ const MoralisHelpers = {
     const res = Array.isArray(user.attributes.accounts) ? user.attributes.accounts[0] : undefined;
     return res;
   },
+
+  makeExecuteFunctionOptions: (options: Omit<Moralis.ExecuteFunctionOptions, 'contractAddress' | 'abi'>): Moralis.ExecuteFunctionOptions => ({
+    contractAddress: CONTRACT_ADDRESS,
+    abi,
+    ...options,
+  })
 }
 
 export default MoralisHelpers

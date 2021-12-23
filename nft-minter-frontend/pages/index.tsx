@@ -1,7 +1,10 @@
+import ApproveUserForm from 'components/ApproveUserForm'
 import NFTCardItem from 'components/NFTCardItem'
+import TransferNFTForm from 'components/TransferNFTForm'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { Callback } from 'types'
 import useInitMoralis from '../lib/custom-hooks/useInitMoralis'
 import styles from '../styles/Home.module.css'
 
@@ -16,10 +19,13 @@ const PageHead = () => (
 const Home: NextPage = () => {
   const {
     user,
+    userAddressRef,
     nftList,
     handleMint,
     handleMintNewNFT,
+    handleTransferNFT,
     handleSetFile,
+    handleChangeMintInputState,
   } = useInitMoralis()
 
   return (
@@ -30,6 +36,7 @@ const Home: NextPage = () => {
           <div>{`User: ${user.getUsername()}`}</div>
         )}
       </header>
+      <hr />
       <div
         className='flex'
       >
@@ -41,19 +48,16 @@ const Home: NextPage = () => {
             />
           ))}
       </div>
-      <div>
-        <label>
-          {'Upload file for new NFT.'}
-          <input 
-            type="file"
-            onChange={handleSetFile}
-          />
-        </label>
-        <hr />
-        <button className="btn btn-primary" onClick={handleMintNewNFT}>
-            {'Mint a New NFT!'}
-        </button>
-      </div>
+      <hr />
+      <h2>Test Transfer</h2>
+      <button className="btn btn-primary" onClick={handleTransferNFT}>
+        Transfer to my Address
+      </button>
+      <hr />
+      <ApproveUserForm />
+      <TransferNFTForm 
+        userAddress={userAddressRef}
+      />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { SingleParsedMetadata } from 'api/moralis/getAllNFTs'
+import Image from 'next/image';
 import React, { memo } from 'react'
 import { Callback } from 'types'
 
@@ -19,10 +20,13 @@ const NFTCardItem = ({
         <div>
           {metadata.name}
         </div>
+        <div className={'max-w-xs'}>
+          <img src={metadata.image} alt={'metadata-img'} />
+        </div>
       </div>
       <div>
-        <input />
-        <input />
+        <input className={'block'} />
+        <input className={'block'} />
         <button className="btn btn-primary" onClick={onMint}>
           {'Mint'}
         </button>
