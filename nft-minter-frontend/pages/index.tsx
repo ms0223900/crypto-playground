@@ -43,6 +43,7 @@ const Home: NextPage = () => {
           {nftList.map((n, i) => (
             <NFTCardItem 
               key={i}
+              commonTokenInfo={n}
               metadata={n.parsedMetadata}
               onMint={handleMint}
             />

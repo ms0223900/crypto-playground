@@ -1,6 +1,7 @@
 import { BasicMetadata } from "lib/Handlers/MoralisHelpers";
 import Moralis from "moralis"
 import { components } from "moralis/types/generated/web3Api"
+import { CommonNFTInfo } from "types";
 import { DEFAULT_CHAIN } from "../../config";
 
 export const fetchERC721TokenMetadata = (tokenURI: string): Promise<BasicMetadata> => (
@@ -23,13 +24,13 @@ export interface SingleParsedMetadata {
 export type SingleHandledNFTData = {
   parsedMetadata: SingleParsedMetadata | null
   meta?: components['schemas']['nftContractMetadata']
-} & components["schemas"]["nftOwner"]
+} & CommonNFTInfo
 
 const getAllNFTs = async (address: string, chain = (DEFAULT_CHAIN as components["schemas"]["chainList"])) => {
   const NFTList = await Moralis.Web3API.account.getNFTs({
     address,
     chain,
-  })
+  }) as { result: CommonNFTInfo[] }
   let res: SingleHandledNFTData[] = []
   if(!NFTList.result) return res;
 
