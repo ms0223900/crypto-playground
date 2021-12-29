@@ -1,4 +1,5 @@
 import ApproveUserForm from 'components/ApproveUserForm'
+import MintNewERC721NFTForm from 'components/MintNewERC721NFTForm'
 import NFTCardItem from 'components/NFTCardItem'
 import TransferNFTForm from 'components/TransferNFTForm'
 import type { NextPage } from 'next'
@@ -26,6 +27,7 @@ const Home: NextPage = () => {
     handleTransferNFT,
     handleSetFile,
     handleChangeMintInputState,
+    handleOpenBlindBox,
   } = useInitMoralis()
 
   return (
@@ -38,7 +40,7 @@ const Home: NextPage = () => {
       </header>
       <hr />
       <div
-        className='flex'
+        className='flex flex-wrap w-full '
       >
           {nftList.map((n, i) => (
             <NFTCardItem 
@@ -46,6 +48,7 @@ const Home: NextPage = () => {
               commonTokenInfo={n}
               metadata={n.parsedMetadata}
               onMint={handleMint}
+              onOpenBlindBox={handleOpenBlindBox(Number(n.token_id))}
             />
           ))}
       </div>
@@ -54,6 +57,11 @@ const Home: NextPage = () => {
       <button className="btn btn-primary" onClick={handleTransferNFT}>
         Transfer to my Address
       </button>
+      <MintNewERC721NFTForm
+        handleChangeMintInputState={handleChangeMintInputState}
+        handleSetFile={handleSetFile}
+        handleMintNewNFT={handleMintNewNFT}
+      />
       <hr />
       <ApproveUserForm />
       <TransferNFTForm 

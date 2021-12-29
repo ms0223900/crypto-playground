@@ -1,3 +1,4 @@
+import openBlindBox from "api/contracts/openBlindBox";
 import mint721Token, { MintERC721TokenMetadataOptions } from "api/moralis/mint721Token";
 import mintNFT from "api/moralis/mintNFT";
 import mintWholeNewNFT from "api/moralis/mintWholeNewNFT";
@@ -92,6 +93,10 @@ const useInitMoralis = () => {
     }))
   }, [])
 
+  const handleOpenBlindBox = useCallback((tokenId: number) => async () => {
+    await openBlindBox(undefined as any)(tokenId);
+  }, [])
+
   return ({
     user,
     userAddressRef,
@@ -101,6 +106,7 @@ const useInitMoralis = () => {
     handleTransferNFT,
     handleSetFile,
     handleChangeMintInputState,
+    handleOpenBlindBox,
   })
 }
 

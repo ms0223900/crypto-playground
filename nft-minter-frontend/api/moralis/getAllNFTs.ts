@@ -4,14 +4,14 @@ import { components } from "moralis/types/generated/web3Api"
 import { CommonNFTInfo } from "types";
 import { DEFAULT_CHAIN } from "../../config";
 
-export const fetchERC721TokenMetadata = (tokenURI: string): Promise<BasicMetadata> => (
+export const fetchTokenMetadata = (tokenURI: string): Promise<BasicMetadata> => (
   fetch(tokenURI).then(res => res.json())
 )
 
 export const getNFTMetadata = async (metaFromNFTResult: string | undefined, tokenURI?: string) => {
   if(metaFromNFTResult) return JSON.parse(metaFromNFTResult);
   if(!tokenURI || !tokenURI.includes('ipfs')) return null;
-  const fetchedMeta = await fetchERC721TokenMetadata(tokenURI);
+  const fetchedMeta = await fetchTokenMetadata(tokenURI);
   return fetchedMeta;
 }
 
@@ -31,6 +31,7 @@ const getAllNFTs = async (address: string, chain = (DEFAULT_CHAIN as components[
     address,
     chain,
   }) as { result: CommonNFTInfo[] }
+  console.log(NFTList)
   let res: SingleHandledNFTData[] = []
   if(!NFTList.result) return res;
 

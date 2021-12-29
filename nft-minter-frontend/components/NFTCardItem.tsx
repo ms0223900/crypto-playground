@@ -8,21 +8,24 @@ export interface NFTCardItemProps {
   commonTokenInfo: CommonNFTInfo
   metadata: SingleParsedMetadata | null
   onMint: Callback
+  onOpenBlindBox: Callback
 }
 
 const NFTCardItem = ({
   commonTokenInfo,
   metadata,
   onMint,
+  onOpenBlindBox,
 }: NFTCardItemProps) => {
   if(!metadata) return null;
   const {
     amount,
     owner_of,
+    token_id,
   } = commonTokenInfo
   return (
     <Paper
-      className={'p-1 m-1 w-1/4'}
+      className={'p-1 m-1 w-1/6'}
       elevation={2}
     >
       <div
@@ -33,16 +36,20 @@ const NFTCardItem = ({
         <div>
           <img className={'h-60 w-auto'} src={metadata.image} alt={'metadata-img'} />
         </div>
+        <p>{`Token Id: ${token_id}`}</p>
         <p>{`Owner: ${owner_of}`}</p>
         <p>{`Amount: ${amount}`}</p>
       </div>
-      <div>
+      {/* <div>
         <input className={'block'} />
         <input className={'block'} />
         <button className="btn btn-primary" onClick={onMint}>
           {'Mint'}
         </button>
-      </div>
+      </div> */}
+      <button className="btn btn-primary" onClick={onOpenBlindBox}>
+        {'Open'}
+      </button>
     </Paper>
   )
 }

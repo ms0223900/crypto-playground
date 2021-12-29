@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import { Box } from '@mui/material'
 import { Callback } from 'types'
+import openBlindBox from 'api/contracts/openBlindBox'
 
 export interface MintNewERC721NFTFormProps {
     handleSetFile: Callback
@@ -38,6 +39,11 @@ const MintNewERC721NFTForm = ({
             </label>
             <button className="btn btn-primary" onClick={handleMintNewNFT}>
                 {'Mint a New NFT!'}
+            </button>
+            <hr />
+            <button className="btn btn-primary" onClick={() => openBlindBox(undefined as any)(1)}>
+                {/* <input value={} name={} onChange={} /> */}
+                {'Open Blind Box!'}
             </button>
         </div>
     )
