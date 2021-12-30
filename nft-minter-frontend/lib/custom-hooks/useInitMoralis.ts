@@ -3,6 +3,8 @@ import mint721Token, { MintERC721TokenMetadataOptions } from "api/moralis/mint72
 import mintNFT from "api/moralis/mintNFT";
 import mintWholeNewNFT from "api/moralis/mintWholeNewNFT";
 import transferNFT from "api/moralis/transferNFT";
+import fetchAssets from "api/opensea/fetchAssets";
+import { OpenSeaChainEnum } from "api/opensea/types";
 import Moralis from "moralis";
 import { ChangeEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -30,10 +32,23 @@ const useInitMoralis = () => {
         const userAddress = MoralisHelpers.getAddressFromUser(_user);
         if(userAddress) {
           userAddressRef.current = userAddress;
-          const _nftList = await getAllNFTs(userAddress);
+          // const _nftList = await getAllNFTs(userAddress);
+          const _nftList = await fetchAssets({
+            chain: OpenSeaChainEnum.TEST,
+            queryParams: {
+              owner: userAddressRef.current,
+            }
+          })
           console.log(_nftList);
           // await mintNFT(userAddress)(1, 1);
-          setNft(_nftList);
+          setNft(_nftList.assets.map(a => ({
+            token_id: a.token_id,
+            parsedMetadata: {
+              name: a.name,
+              image: a.image_preview_url,
+              description: a.description,
+            },
+          }) as any));
         }
         setUser(_user);
       } catch (error) {
