@@ -63,6 +63,7 @@ contract NFTContract is ERC1155, Ownable {
         address to
     ) public onlyOwner {
         _setIdsAndAmounts();
+        _setBlindBoxBatch();
         _mintBatch(
             to, ids, amounts, ""
         );
