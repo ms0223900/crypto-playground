@@ -40,13 +40,6 @@ const NFTCardItem = ({
         <p>{`Owner: ${owner_of}`}</p>
         <p>{`Amount: ${amount}`}</p>
       </div>
-      {/* <div>
-        <input className={'block'} />
-        <input className={'block'} />
-        <button className="btn btn-primary" onClick={onMint}>
-          {'Mint'}
-        </button>
-      </div> */}
       <button className="btn btn-primary" onClick={onOpenBlindBox}>
         {'Open'}
       </button>

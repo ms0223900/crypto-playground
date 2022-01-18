@@ -32,23 +32,24 @@ const useInitMoralis = () => {
         const userAddress = MoralisHelpers.getAddressFromUser(_user);
         if(userAddress) {
           userAddressRef.current = userAddress;
-          // const _nftList = await getAllNFTs(userAddress);
-          const _nftList = await fetchAssets({
-            chain: OpenSeaChainEnum.TEST,
-            queryParams: {
-              owner: userAddressRef.current,
-            }
-          })
+          const _nftList = await getAllNFTs(userAddress);
+          // const _nftList = await fetchAssets({
+          //   chain: OpenSeaChainEnum.TEST,
+          //   queryParams: {
+          //     owner: userAddressRef.current,
+          //   }
+          // })
           console.log(_nftList);
           // await mintNFT(userAddress)(1, 1);
-          setNft(_nftList.assets.map(a => ({
-            token_id: a.token_id,
-            parsedMetadata: {
-              name: a.name,
-              image: a.image_preview_url,
-              description: a.description,
-            },
-          }) as any));
+          // setNft(_nftList.assets.map(a => ({
+          //   token_id: a.token_id,
+          //   parsedMetadata: {
+          //     name: a.name,
+          //     image: a.image_preview_url,
+          //     description: a.description,
+          //   },
+          // }) as any));
+          setNft(_nftList)
         }
         setUser(_user);
       } catch (error) {

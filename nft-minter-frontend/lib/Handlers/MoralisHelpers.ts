@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import convertFileToBase64 from "lib/functions/convertFileToBase64";
 import Moralis from "moralis"
 // import abi from '../../static/abi.json';
-import abi from '../../static/abi-2.json';
+import abi from 'static/abi-2.json';
 
 export interface ImgMetadataParams {
   name: string
